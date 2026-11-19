@@ -139,6 +139,7 @@ static inline Queue_err_t Queue_pop_all(Queue *const Queue, void *const outData)
 {
     size_t available_bytes = Queue_available_read(Queue);
     size_t newReadIndex = Queue_read_internal(Queue, outData, available_bytes);
+    Queue->readIndex = newReadIndex;
     return Queue_Ok;
 }
 #endif
