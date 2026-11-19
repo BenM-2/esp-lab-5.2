@@ -4,7 +4,7 @@ ELF=demo.elf
 
 # object files
 
-OBJS= $(STARTUP)  $(HAL_OBJS)  main.o
+OBJS= $(STARTUP)  $(HAL_OBJS)  main.o pwm.o
 
 HAL_OBJS= stm32l4xx_hal.o stm32l4xx_hal_rcc.o stm32l4xx_hal_rcc_ex.o stm32l4xx_hal_cortex.o stm32l4xx_hal_pwr.o stm32l4xx_hal_pwr_ex.o stm32l4xx_hal_gpio.o \
 stm32l4xx_hal_dma.o stm32l4xx_hal_uart.o stm32l4xx_hal_uart_ex.o stm32l4xx_hal_exti.o
@@ -12,7 +12,9 @@ stm32l4xx_hal_dma.o stm32l4xx_hal_uart.o stm32l4xx_hal_uart_ex.o stm32l4xx_hal_e
 
 # Tool path
 
-TOOLROOT		=/opt/gcc-arm-none-eabi/bin
+# TOOLROOT		=/opt/gcc-arm-none-eabi/bin/arm-none-eabi-gcc/
+TOOLROOT 		=
+
 
 # Library path
 
@@ -21,17 +23,16 @@ CMSIS			= ../Drivers/CMSIS/Core
 DEVICE			= ../Drivers/CMSIS/Device/ST/STM32L4xx/Include
 Common_BSP		= ../Drivers/BSP/Components/Common
 APP			= .
-NEWLIB 			= ../../newlib-nano/arm-none-eabi/newlib/
-NEWLIBINCLUDE 		= ../../newlib-cygwin/newlib/libc/include/
-
+NEWLIB 		= ../../newlib-arm-none-eabi/arm-none-eabi/newlib/
+NEWLIBINCLUDE = ../../newlib-cygwin/newlib/libc/include/
 
 # Tools
 
-CC=$(TOOLROOT)/arm-none-eabi-gcc
-LD=$(TOOLROOT)/arm-none-eabi-gcc
-AR=$(TOOLROOT)/arm-none-eabi-ar
-AS=$(TOOLROOT)/arm-none-eabi-as
-OBJCOPY=$(TOOLROOT)/arm-none-eabi-objcopy
+CC=$(TOOLROOT)arm-none-eabi-gcc
+LD=$(TOOLROOT)arm-none-eabi-gcc
+AR=$(TOOLROOT)arm-none-eabi-ar
+AS=$(TOOLROOT)arm-none-eabi-as
+OBJCOPY=$(TOOLROOT)arm-none-eabi-objcopy
 
 # Code paths
 APP_CODE=$(APP)/Src
@@ -43,6 +44,7 @@ VPATH=$(HAL)/Src:$(APP_CODE)
 vpath %.c $(APP_CODE)
 vpath %.s $(APP_CODE)
 vpath %.c $(HAL)/Src
+vpath %.c $(NEWLIB)
 
 
 #  Processor specific
@@ -63,7 +65,7 @@ FULLASSERT = -DUSE_FULL_ASSERT
 
 LDFLAGS+= -T$(LDSCRIPT) -mthumb -mcpu=cortex-m4 -nostdlib  -L$(NEWLIB)
 CFLAGS+= -mcpu=cortex-m4 -mthumb -D$(BOARD) -D$(BOARDTYPE) -D$(PTYPE)
-CFLAGS+= -I$(APP)/Inc -I$(HAL)/Inc -I$(CMSIS)/Include -I$(Common_BSP)  -I$(DEVICE) -I$(NEWLIBINCLUDE)
+CFLAGS+= -I$(APP)/Inc -I$(HAL)/Inc -I$(CMSIS)/Include -I$(Common_BSP)  -I$(DEVICE) -I$(NEWLIBINCLUDE) -I. -IInc
 CFLAGS+=  -DUSE_USB_OTG_FS  -D$(BOARD) -DUSE_STDPERIPH_DRIVER $(FULLASSERT)
 
 # Build executable 
