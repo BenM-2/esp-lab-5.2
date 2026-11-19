@@ -89,11 +89,18 @@ int main(void)
     /* loop for ever */
     for (;;)
     {
-      if (Queue_available_read(&queue))
+      // if (Queue_available_read(&queue))
+      // {
+      //   static char character;
+      //   Queue_pop(&queue,&character,sizeof(char));
+      //   __io_putchar(character);
+      // }
+      if (Queue_available_read(&queue) > 10)
       {
-        static char character;
-        Queue_pop(&queue,&character,sizeof(char));
-        __io_putchar(character);
+        char str_buf[120] = {0};
+        Queue_pop_all(&queue,&str_buf);
+        printf("%s",str_buf);
+        fflush(stdout);
       }
     }
   else
