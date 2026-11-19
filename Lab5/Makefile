@@ -4,10 +4,10 @@ ELF=demo.elf
 
 # object files
 
-OBJS= $(STARTUP)  $(HAL_OBJS)  main.o pwm.o
+OBJS= $(STARTUP)  $(HAL_OBJS) pwm.o
 
 HAL_OBJS= stm32l4xx_hal.o stm32l4xx_hal_rcc.o stm32l4xx_hal_rcc_ex.o stm32l4xx_hal_cortex.o stm32l4xx_hal_pwr.o stm32l4xx_hal_pwr_ex.o stm32l4xx_hal_gpio.o \
-stm32l4xx_hal_dma.o stm32l4xx_hal_uart.o stm32l4xx_hal_uart_ex.o stm32l4xx_hal_exti.o
+stm32l4xx_hal_dma.o stm32l4xx_hal_uart.o stm32l4xx_hal_uart_ex.o stm32l4xx_hal_exti.o stm32l4xx_hal_tim.o stm32l4xx_hal_tim_ex.o
 
 
 # Tool path

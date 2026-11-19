@@ -1,5 +1,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stm32l4xx_hal_tim.h"
+#include "stm32l4xx_hal_tim_ex.h"
 
 /* Private variables ---------------------------------------------------------*/
 
